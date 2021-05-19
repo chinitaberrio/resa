@@ -91,7 +91,10 @@ class Runner(object):
         for i, data in enumerate(tqdm(val_loader, desc=f'Validate')):
             data = self.to_cuda(data)
             with torch.no_grad():
+                start = time.time()
                 output = self.net(data['img'])
+                end = time.time()
+                print(end - start)
                 self.evaluator.evaluate(val_loader.dataset, output, data)
 
         metric = self.evaluator.summarize()
